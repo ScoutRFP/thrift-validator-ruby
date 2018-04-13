@@ -133,13 +133,13 @@ class AcceptanceTest < MiniTest::Unit::TestCase
 
   def test_fails_if_union_set_field_is_invalid
     union = UnionExample.new
-    union.primary = SimpleStruct.new
+    union.primary = [SimpleStruct.new]
     refute_valid union
   end
 
   def test_passes_if_union_set_field_is_valid
     union = UnionExample.new
-    union.primary = SimpleStruct.new required_string: 'foo'
+    union.primary = [SimpleStruct.new(required_string: 'foo')]
     assert_valid union
   end
 
