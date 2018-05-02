@@ -3,6 +3,8 @@ require 'thrift'
 
 module Thrift
   class Validator
+    DEFAULT_TYPE = Thrift::ProtocolException::UNKNOWN
+
     # @param structs [Object] any Thrift value -- struct, primitive, or a collection thereof
     # @raise [Thrift::ProtocolException] if any deviation from schema was detected
     # @return [nil] if no problems were detected; note that this does not include type checks
@@ -21,6 +23,8 @@ module Thrift
           end
         rescue ProtocolException => e
           raise ProtocolException.new(e.type, "#{struct.class}: #{e.message}")
+        rescue => e # union validation raises StandardError...
+          raise ProtocolException.new(DEFAULT_TYPE, "#{struct.class}: #{e.message}")
         end
       end
     end
