@@ -91,7 +91,7 @@ Or install it yourself as:
 
 First install `thrift` compilier on your platform.
 
-	$ make test
+    $ rake test
 
 ## Contributing
 
