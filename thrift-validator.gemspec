@@ -6,8 +6,8 @@ require 'thrift/validator/version'
 Gem::Specification.new do |spec|
   spec.name          = 'thrift-validator'
   spec.version       = Thrift::Validator::VERSION
-  spec.authors       = ['ahawkins']
-  spec.email         = ['adam@hawkins.io']
+  spec.authors       = ['ahawkins', 'anujdas']
+  spec.email         = ['adam@hawkins.io', 'anujdas@gmail.com']
   spec.summary       = %q{Recursive thrift struct validator}
   spec.description   = %q{}
   spec.homepage      = 'https://github.com/saltside/thrift-validator-ruby'
