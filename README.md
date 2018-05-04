@@ -35,7 +35,7 @@ struct.validate # => Thrift::ProtocolException
 nested.validate # => true
 
 # With the validator
-Thrift::Validator.validate(nested) # => Thrift::ProtocolException
+Thrift::Validator.new.validate(nested) # => Thrift::ProtocolException
 ```
 
 ## Semantics enforced
@@ -60,7 +60,7 @@ example:
 Thrift::ProtocolException: Required field required_string is unset!
 
 # With thrift-validator
-> Thrift::Validator.validate(struct)
+> Thrift::Validator.new.validate(struct)
 Thrift::ProtocolException: SimpleStruct: Required field required_string is unset!
 ```
 
