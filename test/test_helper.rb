@@ -1,8 +1,6 @@
 require 'bundler/setup'
 
-root = File.expand_path '../..', __FILE__
-
-$LOAD_PATH << "#{root}/vendor/gen-rb"
+$LOAD_PATH << File.expand_path('../gen-rb', __FILE__)
 
 require 'thrift-validator'
 

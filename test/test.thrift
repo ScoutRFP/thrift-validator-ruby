@@ -37,6 +37,6 @@ struct MapValueExample {
 }
 
 union UnionExample {
-  1: SimpleStruct primary
+  1: list<SimpleStruct> primary
   2: string alternate
 }

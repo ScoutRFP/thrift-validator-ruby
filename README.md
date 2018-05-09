@@ -1,60 +1,56 @@
 # Thrift::Validator
 
-Recursive [thrift][] struct validator. The thrift library out of the
-box does not validated nested structs, this library fixes that
-problem. It does not monkey-patch the Thrift code. Instead this
-library includes a class to recursively validate objects.
+Recursive [thrift][] struct validator. The thrift library out of the box does
+not validated nested structs; This library fixes that problem. Rather than
+monkey-patching Thrift, this library includes a class to validate objects
+recursively.
 
-Here's an example from this libraries test. Take a look at this
-protocol:
+Here's an example from this library's tests. Given the following schema:
 
 ```thrift
 struct SimpleStruct  {
-  1: required string required_string
-  2: optional string optional_string
+  1: required string required_string,
+  2: optional string optional_string,
 }
 
 struct NestedExample {
-  1: required SimpleStruct required_struct
-  2: optional SimpleStruct optional_struct
+  1: required SimpleStruct required_struct,
+  2: optional SimpleStruct optional_struct,
 }
 ```
 
-Then ran some ruby:
+This library provides:
 
 ```ruby
 struct = SimpleStruct.new
-nested = NestedStruct.new required_struct: struct
+nested = NestedStruct.new(required_struct: struct)
 
-# Method defined by the thrift library
+# Method defined by the Thrift library
 struct.validate # => Thrift::ProtocolException
 
-# Thrift only validate fields set as required on this instance.
-# so since required_struct is non-nil validation succeeds.
-# Also note that thrift does not validate the semantics of
-# the assigned objects, so also assigning and invalid struct will
-# pass its validation method.
+# Thrift only validates fields set as required on this instance. Since
+# `required_struct` is non-nil, validation succeeds. Also note that Thrift
+# does not validate semantics of the assigned objects, so assigning an
+# invalid struct will pass its validation method.
 nested.validate # => true
 
 # With the validator
-validator = Thrift::Validator.new
-validator.validate nested # => Thrift::ProtocolException
+Thrift::Validator.new.validate(nested) # => Thrift::ProtocolException
 ```
 
-## Semantics
+## Semantics enforced
 
-* Original thrift validation smenatics enforces
-* `optional` or `required` `struct` types pass validation
-* `optional` or `required` `list<struct>` items pass validation
-* `optional` or `required` `set<struct>` items pass validation
-* `optional` or `required` `map` type using a `struct` for key or
-  value pass validation
+* all original Thrift validation semantics
+* `optional` or `required` `struct` types
+* `optional` or `required` `list<struct>` items
+* `optional` or `required` `set<struct>` items
+* `optional` or `required` `map` types with `struct` keys and/or values
 
 ## Exception handling
 
 Due to the recursive nature of `thrift-validator`, the validation
-errors raised by Thrift have become less than helpful. In order
-to provide more information, the `Thrift::ProtocolException`'s
+errors raised by Thrift become less than helpful. In order
+to provide more information, the resulting `Thrift::ProtocolException`
 message is prefixed with the type where the error occurred. For
 example:
 
@@ -68,8 +64,8 @@ Thrift::ProtocolException: Required field required_string is unset!
 Thrift::ProtocolException: SimpleStruct: Required field required_string is unset!
 ```
 
-This feature becomes especially useful with nested structures,
-where the validation may fail at any given depth.
+This feature becomes especially useful with nested structs, where validation
+may fail at any depth.
 
 ## Installation
 
@@ -89,13 +85,14 @@ Or install it yourself as:
 
 ## Testing
 
-First install `thrift` compilier on your platform.
+First, install a `thrift` compiler on your platform (e.g., `brew install
+thrift`, `sudo apt install thrift`). Then run:
 
-	$ make test
+    $ rake test
 
 ## Contributing
 
-1. Fork it ( https://github.com/saltside/thrift-validator/fork )
+1. Fork it ( https://github.com/saltside/thrift-validator-ruby/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

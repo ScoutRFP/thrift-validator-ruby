@@ -170,8 +170,8 @@ class UnionExample < ::Thrift::Union
   ALTERNATE = 2
 
   FIELDS = {
-    PRIMARY => {:type => ::Thrift::Types::STRUCT, :name => 'primary', :class => ::SimpleStruct},
-    ALTERNATE => {:type => ::Thrift::Types::STRING, :name => 'alternate'}
+    PRIMARY => {:type => ::Thrift::Types::LIST, :name => 'primary', :element => {:type => ::Thrift::Types::STRUCT, :class => ::SimpleStruct}, :optional => true},
+    ALTERNATE => {:type => ::Thrift::Types::STRING, :name => 'alternate', :optional => true}
   }
 
   def struct_fields; FIELDS; end
